@@ -1,0 +1,38 @@
+server:
+  port: 8081
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://Ayan:DWOUCA4Jya3fWQ3A@devcluster.97uhr.mongodb.net/DevCluster?retryWrites=true&w=majority&appName=DevCluster
+      auto-index-creation: true
+      connection:
+        minPoolSize: 5
+        maxPoolSize: 30
+        maxIdleTimeMS: 600000
+        maxLifeTimeMS: 1800000
+  main:
+    allow-circular-references: true
+
+  application:
+    name: DevSquare
+redisson:
+  redisUrl: redis://AYAN:aYANMALIK%231@redis-19647.c12.us-east-1-4.ec2.redns.redis-cloud.com:19647
+
+#redis://AYAN:aYANMALIK%231@redis-19647.c12.us-east-1-4.ec2.redns.redis-cloud.com:19647
+
+#Not in use
+#  kafka:
+
+#    consumer:
+#      auto-offset-reset: earliest
+#      bootstrap-servers: localhost:9092
+#      group-id: data-change
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#      properties:
+#        spring.json.trusted.packages: "*"
+#    producer:
+#        bootstrap-servers: localhost:9092
+#        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#        value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
