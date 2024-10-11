@@ -12,4 +12,5 @@ public class DevSqaureApplication {
 		SpringApplication.run(DevSqaureApplication.class, args);
 	}
 
+
 }
