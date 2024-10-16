@@ -56,13 +56,6 @@ public class QuerriesController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//    @PatchMapping
-//    public  ResponseEntity<Querry> update(@RequestBody Querry querry,@RequestParam ObjectId id){
-//        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-//        Querry update = querryService.update(querry, name, id);
-//        if (update != null) return  new ResponseEntity<>(update,HttpStatus.OK);
-//        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
 
     @PatchMapping("/post_comment/{uid}")
     public ResponseEntity<Querry> post(@PathVariable ObjectId uid, @RequestBody CommentDTO commentDTO){

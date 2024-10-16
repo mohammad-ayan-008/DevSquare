@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/user")
 public class UserRegisterationController {
@@ -43,6 +45,11 @@ public class UserRegisterationController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping("/invalidate")
+    public ResponseEntity<?> invalidate(){
+        return ResponseEntity.ok(Map.of("status",""+userService.invalidate()));
     }
 
 }

@@ -12,7 +12,7 @@ public class BloomFilterServiceImpl implements BloomFilterService {
     private RedissonClient redissonClient;
 
     private RBloomFilter<String> _filter_userName;
-    private RBloomFilter<String> _filter_user_handle;
+
 
     @Override
     public RBloomFilter<String> getUserNameBloomFilter() {
@@ -37,24 +37,8 @@ public class BloomFilterServiceImpl implements BloomFilterService {
     }
 
     @Override
-    public void AddUserhandle(String userhandle) {
-        RBloomFilter<String> stringFilter = getUserHandleBloomFilter();
-        stringFilter.add(userhandle);
-    }
-
-
-    @Override
-    public Boolean ifSUserHandleIsAvailable(String userhandle) {
-        return getUserHandleBloomFilter().contains(userhandle);
-    }
-
-    @Override
-    public RBloomFilter<String> getUserHandleBloomFilter() {
-        if (_filter_user_handle == null) {
-            _filter_user_handle= redissonClient.getBloomFilter("userHandle_1");
-            _filter_user_handle.tryInit(1000000L,0.0000000001);
-        }
-        return _filter_user_handle;
+    public boolean Invalidate() {
+        return getUserNameBloomFilter().delete();
     }
 
 }

@@ -8,7 +8,5 @@ public interface BloomFilterService {
     RBloomFilter<String> getUserNameBloomFilter();
     void AddUserName(String userName);
     Boolean ifSUserNameIsAvailable(String userName);
-    RBloomFilter<String> getUserHandleBloomFilter();
-    void AddUserhandle(String userhandle);
-    Boolean ifSUserHandleIsAvailable(String userhandle);
+    boolean Invalidate();
 }

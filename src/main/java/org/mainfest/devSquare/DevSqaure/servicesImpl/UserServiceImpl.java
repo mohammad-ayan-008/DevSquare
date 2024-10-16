@@ -75,4 +75,9 @@ public class UserServiceImpl implements UserService {
     public void deleteAll() {
         userrepository.deleteAll();
     }
+
+    @Override
+    public boolean invalidate() {
+        return bloomFilterService.Invalidate();
+    }
 }

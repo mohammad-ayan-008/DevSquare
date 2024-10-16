@@ -11,6 +11,5 @@ public class DevSqaureApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DevSqaureApplication.class, args);
 	}
-
-
+	
 }

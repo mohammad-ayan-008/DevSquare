@@ -15,4 +15,5 @@ public interface UserService {
     List<USER> fetchAll();
     USER fetchByID(ObjectId id);
     void deleteAll();
+    boolean invalidate();
 }
