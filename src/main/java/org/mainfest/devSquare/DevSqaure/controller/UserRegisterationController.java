@@ -36,12 +36,12 @@ public class UserRegisterationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> createToken(@RequestBody UserDto user){
+    public ResponseEntity<Map<String,String>> createToken(@RequestBody UserDto user){
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassword()));
             UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());
             String jwt = jwtUtils.generateToken(userDetails.getUsername());
-            return new ResponseEntity<>(jwt,HttpStatus.OK);
+            return new ResponseEntity<>(Map.of("token",jwt),HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
