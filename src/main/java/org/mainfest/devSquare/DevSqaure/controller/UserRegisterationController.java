@@ -48,6 +48,7 @@ public class UserRegisterationController {
     }
 
 
+
     @GetMapping("/invalidate")
     public ResponseEntity<?> invalidate(){
         return ResponseEntity.ok(Map.of("status",""+userService.invalidate()));
