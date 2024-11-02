@@ -50,7 +50,7 @@ public class UserRegisterationController {
     @GetMapping("/validate-token/{token}")
     public ResponseEntity<Map<String,String>> validate(@PathVariable String token){
         if(!jwtUtils.isExpired(token)){
-            ResponseEntity.ok(Map.of("status","valid"));
+            return ResponseEntity.ok(Map.of("status","valid"));
         }
         return ResponseEntity.ok(Map.of("status","invalid"));
     }
