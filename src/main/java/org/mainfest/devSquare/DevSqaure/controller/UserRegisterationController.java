@@ -47,7 +47,13 @@ public class UserRegisterationController {
         }
     }
 
-
+    @PostMapping("/validate-token/{token}")
+    public ResponseEntity<Map<String,String>> validate(@PathVariable String token){
+        if(!jwtUtils.isExpired(token)){
+            ResponseEntity.ok(Map.of("status","valid"));
+        }
+        return ResponseEntity.ok(Map.of("status","invalid"));
+    }
 
     @GetMapping("/invalidate")
     public ResponseEntity<?> invalidate(){
