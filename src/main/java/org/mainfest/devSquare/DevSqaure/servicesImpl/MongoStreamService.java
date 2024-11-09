@@ -6,6 +6,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.changestream.ChangeStreamDocument;
+import com.mongodb.client.model.changestream.FullDocument;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -37,16 +38,21 @@ public class MongoStreamService {
         MongoDatabase database = mongoClient.getDatabase("DevCluster");
         MongoCollection<Document> collection = database.getCollection("querry_collection");
 
-        collection.watch().forEach((ChangeStreamDocument<Document> changeStreamDocument) -> {
+        collection.watch()
+                .fullDocument(FullDocument.UPDATE_LOOKUP)
+                .forEach((ChangeStreamDocument<Document> changeStreamDocument) -> {
+
             Document document = changeStreamDocument.getFullDocument();
-            assert document != null;
-            if (document.containsKey("_id")){
-                ObjectId id= (ObjectId) document.getObjectId("_id");
-                document.put("_id",id.toHexString());
+            System.out.println(document);
+
+            if (document!= null&&document.containsKey("_id")) {
+                ObjectId id = (ObjectId) document.getObjectId("_id");
+                document.put("_id", id.toHexString());
+
+                System.out.println(document.toJson());
+                Querry querry = gson.fromJson(document.toJson(), Querry.class);
+                notificationservice.sendNotification(querry);
             }
-            System.out.println(document.toJson());
-            Querry querry = gson.fromJson(document.toJson(), Querry.class);
-            notificationservice.sendNotification(querry);
         });
     }
 
