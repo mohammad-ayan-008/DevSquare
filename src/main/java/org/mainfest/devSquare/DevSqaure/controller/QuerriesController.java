@@ -90,7 +90,7 @@ public class QuerriesController {
     public ResponseEntity<Map<String,String>> addLike(
             @RequestParam String id) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (querryService.helpful_btn(id,name)==null) return ResponseEntity.ok(Map.of("status","OK"));
+        if (querryService.helpful_btn(id,name)!=null) return ResponseEntity.ok(Map.of("status","OK"));
         return new ResponseEntity<>(Map.of("status","failed"),HttpStatus.CONFLICT);
     }
 

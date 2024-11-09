@@ -8,6 +8,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.changestream.ChangeStreamDocument;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.mainfest.devSquare.DevSqaure.entities.Querry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +38,14 @@ public class MongoStreamService {
         MongoCollection<Document> collection = database.getCollection("querry_collection");
 
         collection.watch().forEach((ChangeStreamDocument<Document> changeStreamDocument) -> {
-            String json = changeStreamDocument.getFullDocument().toJson();
-            Querry querry = gson.fromJson(json, Querry.class);
+            Document document = changeStreamDocument.getFullDocument();
+            assert document != null;
+            if (document.containsKey("_id")){
+                ObjectId id= (ObjectId) document.getObjectId("_id");
+                document.put("_id",id.toHexString());
+            }
+            System.out.println(document.toJson());
+            Querry querry = gson.fromJson(document.toJson(), Querry.class);
             notificationservice.sendNotification(querry);
         });
     }

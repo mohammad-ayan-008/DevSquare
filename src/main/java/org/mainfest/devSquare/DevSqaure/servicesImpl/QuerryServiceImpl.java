@@ -1,6 +1,7 @@
 package org.mainfest.devSquare.DevSqaure.servicesImpl;
 
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.mainfest.devSquare.DevSqaure.entities.CommentDTO;
 import org.mainfest.devSquare.DevSqaure.entities.Querry;
@@ -9,6 +10,8 @@ import org.mainfest.devSquare.DevSqaure.entities.payloads;
 import org.mainfest.devSquare.DevSqaure.repositories.QuerriesRepository;
 import org.mainfest.devSquare.DevSqaure.repositories.UserRepository;
 import org.mainfest.devSquare.DevSqaure.services.QuerryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,12 +19,16 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class QuerryServiceImpl implements QuerryService {
+    private Logger logger = (Logger) LoggerFactory.getLogger(QuerryServiceImpl.class);
     @Autowired
     private QuerriesRepository querriesRepository;
     @Autowired
@@ -110,6 +117,8 @@ public class QuerryServiceImpl implements QuerryService {
     @Override
     public Querry helpful_btn(String post_id, String name) {
         Optional<Querry> Opquerry = querriesRepository.findById(post_id);
+        logger.info("name is ----------- {}   ",name);
+        System.out.println("name is --------------------" + name);
         if (Opquerry.isPresent()) {
             Querry querry = Opquerry.get();
             if(querry.getHelpFull().contains(name)) querry.getHelpFull().remove(name);
