@@ -11,13 +11,13 @@ import java.util.List;
 public interface QuerryService {
 
     Querry save(Querry querry,String name);
-    Querry delete(ObjectId id,String name);
-    Querry update(Querry querry,String name,ObjectId id);
+    Querry delete(String id,String name);
+    Querry update(Querry querry,String name,String id);
     List<Querry> fetchAll(String name);
-    Querry fetchByID(ObjectId id);
-    Querry uploadComment(ObjectId id, CommentDTO commentDTO);
+    Querry fetchByID(String id);
+    Querry uploadComment(String id, CommentDTO commentDTO);
     Page<Querry> getAllQuerries(int offset,int page);
-    boolean deleteComment(ObjectId comment_id,ObjectId Querry_id);
-    Querry helpful_btn(ObjectId post_id, String name);
+    boolean deleteComment(String comment_id,String Querry_id);
+    Querry helpful_btn(String post_id, String name);
     void deleteAll();
 }

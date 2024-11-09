@@ -37,6 +37,10 @@ public class QuerriesController {
         return ResponseEntity.ok(querryService.fetchAll(name));
     }
 
+    @GetMapping("/byId/{id}")
+    public ResponseEntity<Querry> getById(@PathVariable String id){
+        return ResponseEntity.ok(querryService.fetchByID(id));
+    }
 
     @GetMapping
     public ResponseEntity<Page<Querry>> getAllQuerries(
@@ -49,7 +53,7 @@ public class QuerriesController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Querry> delete(@RequestParam ObjectId id){
+    public ResponseEntity<Querry> delete(@RequestParam String id){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         Querry querry = querryService.delete(id,name);
         if ( querry != null) return  ResponseEntity.ok(querry);
@@ -58,10 +62,10 @@ public class QuerriesController {
 
 
     @PatchMapping("/post_comment/{uid}")
-    public ResponseEntity<Querry> post(@PathVariable ObjectId uid, @RequestBody CommentDTO commentDTO){
+    public ResponseEntity<Querry> post(@PathVariable String uid, @RequestBody CommentDTO commentDTO){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         commentDTO.setReply_by(name);
-        commentDTO.setId(new ObjectId());
+        commentDTO.setId(new ObjectId().toString());
         Querry querry = querryService.uploadComment(uid, commentDTO);
         if (querry != null) return ResponseEntity.ok(querry);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -69,8 +73,8 @@ public class QuerriesController {
 
     @DeleteMapping("/delete_comment")
     public ResponseEntity<Map<String,String>> deleteComment(
-            @RequestParam ObjectId comment_id,
-            @RequestParam ObjectId querry_id
+            @RequestParam String comment_id,
+            @RequestParam String querry_id
             ){
         Map<String,String> result = new HashMap<>();
 
@@ -84,7 +88,7 @@ public class QuerriesController {
 
     @PutMapping
     public ResponseEntity<Map<String,String>> addLike(
-            @RequestParam ObjectId id) {
+            @RequestParam String id) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         if (querryService.helpful_btn(id,name)==null) return ResponseEntity.ok(Map.of("status","OK"));
         return new ResponseEntity<>(Map.of("status","failed"),HttpStatus.CONFLICT);

@@ -24,7 +24,7 @@ import java.util.List;
 @Document(collection = "user_collection")
 public class USER {
     @Id
-    private ObjectId id;
+    private String id;
 
     @NotNull
     @Indexed(unique = true)
@@ -40,6 +40,5 @@ public class USER {
 
     @Transient
     private int no_of_querries_asked;
-
 
 }

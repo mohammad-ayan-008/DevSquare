@@ -44,7 +44,7 @@ public class QuerryServiceImpl implements QuerryService {
     }
 
     @Override
-    public Querry delete(ObjectId id,String name) {
+    public Querry delete(String id,String name) {
         List<Querry> collect = userRepository.findByUserName(name).getQuerries().stream().filter(querry -> id.equals(querry.get_id())).collect(Collectors.toList());
         if(querriesRepository.findById(id).isPresent() && !collect.isEmpty()) {
             querriesRepository.deleteById(id);
@@ -54,7 +54,7 @@ public class QuerryServiceImpl implements QuerryService {
     }
 
     @Override
-    public Querry update(Querry querry,String name,ObjectId id) {
+    public Querry update(Querry querry,String name,String id) {
         ArrayList<Querry> querries = userRepository.findByUserName(name).getQuerries();
         List<Querry> collect = querries.stream().filter(querry1 -> querry1.get_id().equals(id)).toList();
         if (querriesRepository.findById(querry.get_id()).isPresent() && !collect.isEmpty()){
@@ -69,12 +69,12 @@ public class QuerryServiceImpl implements QuerryService {
     }
 
     @Override
-    public Querry fetchByID(ObjectId id) {
+    public Querry fetchByID(String id) {
         return querriesRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Querry uploadComment(ObjectId id, CommentDTO commentDTO) {
+    public Querry uploadComment(String id, CommentDTO commentDTO) {
         Optional<Querry> querry = querriesRepository.findById(id);
         if (querry.isPresent()){
             Querry querry1 = querry.get();
@@ -95,7 +95,7 @@ public class QuerryServiceImpl implements QuerryService {
     }
 
     @Override
-    public boolean deleteComment(ObjectId comment_id,ObjectId querry_id) {
+    public boolean deleteComment(String comment_id,String querry_id) {
         Optional<Querry> querry  = querriesRepository.findById(querry_id);
         if(querry.isPresent()){
             List<CommentDTO> list_querry = querry.get().getReplies().stream().
@@ -108,7 +108,7 @@ public class QuerryServiceImpl implements QuerryService {
     }
 
     @Override
-    public Querry helpful_btn(ObjectId post_id, String name) {
+    public Querry helpful_btn(String post_id, String name) {
         Optional<Querry> Opquerry = querriesRepository.findById(post_id);
         if (Opquerry.isPresent()) {
             Querry querry = Opquerry.get();

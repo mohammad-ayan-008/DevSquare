@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean delete(ObjectId id) {
+    public boolean delete(String id) {
         if (userrepository.findById(id).get() == null)  return false;
         userrepository.deleteById(id);
         return true;
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public USER fetchByID(ObjectId id) {
+    public USER fetchByID(String id) {
          USER user = userrepository.findById(id).get();
          if (user != null){
              user.setNo_of_querries_asked(user.getQuerries().size());

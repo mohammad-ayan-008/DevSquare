@@ -11,7 +11,7 @@ import org.bson.types.ObjectId;
 @AllArgsConstructor
 @Builder
 public class CommentDTO {
-    private ObjectId id;
+    private String id;
     private String reply_by;
     private String reply_to;
     private String reply;

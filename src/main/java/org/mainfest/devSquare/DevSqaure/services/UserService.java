@@ -10,10 +10,10 @@ import java.util.List;
 public interface UserService {
 
     USER save(USER user);
-    boolean delete(ObjectId id);
+    boolean delete(String id);
     USER update(USER user);
     List<USER> fetchAll();
-    USER fetchByID(ObjectId id);
+    USER fetchByID(String id);
     void deleteAll();
     boolean invalidate();
 }

@@ -18,7 +18,7 @@ import java.util.List;
 public class Querry {
 
     @Id
-    private ObjectId _id;
+    private String _id;
 
     private String posted_by;
 
