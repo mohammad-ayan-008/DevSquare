@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -32,28 +33,33 @@ public class MongoStreamService {
     @Autowired
     private Gson gson;
 
-    @EventListener(ContextRefreshedEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
     public void init() {
-        MongoClient mongoClient = MongoClients.create(mongoUri);
-        MongoDatabase database = mongoClient.getDatabase("DevCluster");
-        MongoCollection<Document> collection = database.getCollection("querry_collection");
+        Thread thread = new Thread(() -> {
+            MongoClient mongoClient = MongoClients.create(mongoUri);
+            MongoDatabase database = mongoClient.getDatabase("DevCluster");
+            MongoCollection<Document> collection = database.getCollection("querry_collection");
 
-        collection.watch()
-                .fullDocument(FullDocument.UPDATE_LOOKUP)
-                .forEach((ChangeStreamDocument<Document> changeStreamDocument) -> {
+            collection.watch()
+                    .fullDocument(FullDocument.UPDATE_LOOKUP)
+                    .forEach((ChangeStreamDocument<Document> changeStreamDocument) -> {
 
-            Document document = changeStreamDocument.getFullDocument();
-            System.out.println(document);
+                        Document document = changeStreamDocument.getFullDocument();
+                        System.out.println(document);
 
-            if (document!= null&&document.containsKey("_id")) {
-                ObjectId id = (ObjectId) document.getObjectId("_id");
-                document.put("_id", id.toHexString());
+                        if (document != null && document.containsKey("_id")) {
+                            ObjectId id = (ObjectId) document.getObjectId("_id");
+                            document.put("_id", id.toHexString());
 
-                System.out.println(document.toJson());
-                Querry querry = gson.fromJson(document.toJson(), Querry.class);
-                notificationservice.sendNotification(querry);
-            }
+                            System.out.println(document.toJson());
+                            Querry querry = gson.fromJson(document.toJson(), Querry.class);
+                            notificationservice.sendNotification(querry);
+                        }
+                    });
         });
+        thread.setDaemon(true);
+        thread.start();
+
     }
 
 

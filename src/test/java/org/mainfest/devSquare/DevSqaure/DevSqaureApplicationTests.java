@@ -19,57 +19,12 @@ import static org.bson.assertions.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-//@SpringBootTest
+@SpringBootTest
 
 class DevSqaureApplicationTests {
+    @Test
+    void initialize(){
+
+    }
 }
-
-
-//	@Autowired
-//	private QuerryService querryService;
-//
-//	@Autowired
-//	private UserService userService;
-//
-//
-//@Test//
-//	void addUser() {
-//Insert the user
-//		USER user = USER.builder()
-//				.userName("Test1#412")
-//				.password("AYAN#123")
-//				.build();
-//		USER save = userService.save(user);
-//		assertNotNull(save);
-//	}
-
-//
-//    @Disabled
-//	@Test
-//	void Addquerry(){
-//		Querry querry = Querry.builder()
-//				.Querry("How to integrate  RabbitMq to Spring Boot")
-//				.replies(new ArrayList<>(
-//						List.of(CommentDTO.builder()
-//										.id(new ObjectId())
-//										.reply_by("Test#412")
-//										.reply_to("Test#412")
-//										.reply("hey @Test#412 just follow the official docs").build())))
-//				.build();
-//		Querry save = querryService.save(querry, "Test#412");
-//		assertNotNull(save);
-//	}
-//	@Test
-//	void AddLike(){
-//		ObjectId id = new ObjectId("670406d3d88a8d691d358f93");
-//		assertNotNull(querryService.helpful_btn(id,"Test#412"));
-//	}
-//
-//
-//	@AfterEach
-//	public  void afterAll(){
-//		userService.deleteAll();
-//		querryService.deleteAll();
-//	}
-
 
