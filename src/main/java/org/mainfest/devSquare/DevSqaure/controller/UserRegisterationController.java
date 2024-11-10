@@ -29,6 +29,7 @@ public class UserRegisterationController {
     @Autowired
     private JwtUtils jwtUtils;
 
+
     @PostMapping("/sign_up")
     public ResponseEntity<?> createUser(@RequestBody @Valid USER user, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
