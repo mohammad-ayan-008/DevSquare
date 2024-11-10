@@ -3,7 +3,6 @@ package org.mainfest.devSquare.DevSqaure.servicesImpl;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.mainfest.devSquare.DevSqaure.entities.USER;
 import org.mainfest.devSquare.DevSqaure.repositories.UserRepository;
 import org.mainfest.devSquare.DevSqaure.services.BloomFilterService;
@@ -31,10 +30,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public USER save(USER user) {
 
-        if (bloomFilterService.ifSUserNameIsAvailable(user.getUserName())) {
-            logger.info("UserName Already Exists");
-            return null;
-        }
+//        if (bloomFilterService.ifSUserNameIsAvailable(user.getUserName())) {
+//            logger.info("UserName Already Exists");
+//            return null;
+//        }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         bloomFilterService.AddUserName(user.getUserName());

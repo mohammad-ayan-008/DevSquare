@@ -1,5 +1,6 @@
 package org.mainfest.devSquare.DevSqaure.controller;
 
+import jakarta.validation.Valid;
 import org.mainfest.devSquare.DevSqaure.entities.USER;
 import org.mainfest.devSquare.DevSqaure.entities.UserDto;
 import org.mainfest.devSquare.DevSqaure.services.UserService;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -28,10 +30,12 @@ public class UserRegisterationController {
     private JwtUtils jwtUtils;
 
     @PostMapping("/sign_up")
-    public ResponseEntity<USER> createUser(@RequestBody USER user){
+    public ResponseEntity<?> createUser(@RequestBody @Valid USER user, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(),HttpStatus.BAD_REQUEST);
+        }
         USER save = userService.save(user);
-        if (save != null) return new ResponseEntity<>(save,HttpStatus.CREATED);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(save, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
