@@ -38,6 +38,7 @@ public class UserRegisterationController {
         return new ResponseEntity<>(save, HttpStatus.CREATED);
     }
 
+
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> createToken(@RequestBody UserDto user){
         try {
